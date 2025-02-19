@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -19,16 +19,16 @@ import java.util.Date
 import java.util.Locale
 
 class MainFragment : Fragment() {
-
     lateinit var edtName: EditText
     lateinit var spnAge: Spinner
     lateinit var tvDate: TextView
     lateinit var recyclerViewImages: RecyclerView
     lateinit var imageFilesList: List<String>
+    lateinit var capturePhotoButton: ImageButton
 
     companion object {
         @JvmStatic
-        fun newInstance() : MainFragment {
+        fun newInstance(): MainFragment {
             return MainFragment()
         }
     }
@@ -39,19 +39,8 @@ class MainFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_main, container, false)
 
-        edtName = rootView.findViewById(R.id.etName)
-        spnAge = rootView.findViewById(R.id.spnAge)
-        populateAgeSpinner()
-        tvDate = rootView.findViewById(R.id.tvDate)
-        recyclerViewImages = rootView.findViewById(R.id.recyclerViewPictures)
-        recyclerViewImages.layoutManager = LinearLayoutManager(context)
-
-        val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
-        tvDate.text = "Data: $currentDate"
-
+        initializeViews(rootView)
         loadImagesFromDownloads()
-
-        val capturePhotoButton: View = rootView.findViewById(R.id.capturePhotoButton)
         capturePhotoButton.setOnClickListener {
             capturePhotoFragment()
         }
@@ -59,7 +48,19 @@ class MainFragment : Fragment() {
         return rootView
     }
 
-    fun populateAgeSpinner(){
+    private fun initializeViews(rootView: View) {
+        edtName = rootView.findViewById(R.id.etName)
+        spnAge = rootView.findViewById(R.id.spnAge)
+        populateAgeSpinner()
+        tvDate = rootView.findViewById(R.id.tvDate)
+        recyclerViewImages = rootView.findViewById(R.id.recyclerViewPictures)
+        recyclerViewImages.layoutManager = LinearLayoutManager(context)
+        capturePhotoButton = rootView.findViewById(R.id.capturePhotoButton)
+        val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+        tvDate.text = "Data: $currentDate"
+    }
+
+    private fun populateAgeSpinner() {
         val ageList = (1..150).toList()
         val spinnerAgeAdapter = ArrayAdapter(
             requireContext(),
@@ -71,13 +72,13 @@ class MainFragment : Fragment() {
     }
 
     private fun loadImagesFromDownloads() {
-        val downloadsFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val downloadsFolder =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val files = downloadsFolder.listFiles()
 
         imageFilesList = ArrayList()
-
         files?.forEach { file ->
-            if (file.isFile && (file.name.endsWith(".jpg"))) {
+            if (file.isFile && (file.name.startsWith("photo_")) && (file.name.endsWith(".jpeg"))) {
                 (imageFilesList as ArrayList).add(file.name)
             }
         }

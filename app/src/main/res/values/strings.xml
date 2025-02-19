@@ -8,4 +8,5 @@
     <string name="type_your_name">Digite seu nome</string>
     <string name="name">Nome</string>
     <string name="age">Idade</string>
+    <string name="take_picture">Registrar foto</string>
 </resources>

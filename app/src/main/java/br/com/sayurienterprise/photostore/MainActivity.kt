@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
 
     private val TAG: String? = MainActivity::class.java.simpleName
- //   lateinit var fragmentContainer : FragmentContainer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +28,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getPermissions() {
-        var permissions = mutableListOf<String>()
+    private fun getPermissions() {
+        val permissions = mutableListOf<String>()
 
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
             permissions.add(Manifest.permission.CAMERA)
