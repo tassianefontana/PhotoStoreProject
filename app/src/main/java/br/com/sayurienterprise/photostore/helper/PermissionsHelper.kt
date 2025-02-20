@@ -1,4 +1,4 @@
-package br.com.sayurienterprise.photostore
+package br.com.sayurienterprise.photostore.helper
 
 import android.Manifest
 import android.content.Context

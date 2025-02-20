@@ -1,4 +1,4 @@
-package br.com.sayurienterprise.photostore.model
+package br.com.sayurienterprise.photostore.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

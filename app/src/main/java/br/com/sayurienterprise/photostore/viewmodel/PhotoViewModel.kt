@@ -1,11 +1,12 @@
-package br.com.sayurienterprise.photostore
+package br.com.sayurienterprise.photostore.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.sayurienterprise.photostore.model.Photo
+import br.com.sayurienterprise.photostore.database.PhotoRepository
+import br.com.sayurienterprise.photostore.database.model.Photo
 import kotlinx.coroutines.launch
 
 class PhotoViewModel(private val repository: PhotoRepository) : ViewModel() {

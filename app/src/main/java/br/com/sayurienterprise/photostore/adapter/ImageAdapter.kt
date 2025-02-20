@@ -1,3 +1,5 @@
+package br.com.sayurienterprise.photostore.adapter
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

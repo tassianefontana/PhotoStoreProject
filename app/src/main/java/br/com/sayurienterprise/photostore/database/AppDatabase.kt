@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import br.com.sayurienterprise.photostore.constants.DBConfig
 import br.com.sayurienterprise.photostore.database.dao.PhotoDao
-import br.com.sayurienterprise.photostore.model.Photo
+import br.com.sayurienterprise.photostore.database.model.Photo
 
 @Database(entities = [Photo::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {

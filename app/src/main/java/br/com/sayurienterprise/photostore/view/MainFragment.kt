@@ -1,6 +1,6 @@
 package br.com.sayurienterprise.photostore.view
 
-import ImageAdapter
+import br.com.sayurienterprise.photostore.adapter.ImageAdapter
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -22,10 +22,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.sayurienterprise.photostore.PhotoStoreApplication
-import br.com.sayurienterprise.photostore.PhotoViewModel
-import br.com.sayurienterprise.photostore.PhotoViewModelFactory
+import br.com.sayurienterprise.photostore.viewmodel.PhotoViewModel
+import br.com.sayurienterprise.photostore.factory.PhotoViewModelFactory
 import br.com.sayurienterprise.photostore.R
-import br.com.sayurienterprise.photostore.model.Photo
+import br.com.sayurienterprise.photostore.database.model.Photo
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import java.text.SimpleDateFormat
 import java.util.Date

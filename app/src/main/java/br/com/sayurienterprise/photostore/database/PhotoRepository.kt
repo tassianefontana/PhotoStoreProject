@@ -1,8 +1,8 @@
-package br.com.sayurienterprise.photostore
+package br.com.sayurienterprise.photostore.database
 
 import androidx.lifecycle.LiveData
 import br.com.sayurienterprise.photostore.database.dao.PhotoDao
-import br.com.sayurienterprise.photostore.model.Photo
+import br.com.sayurienterprise.photostore.database.model.Photo
 
 class PhotoRepository(private val photoDao: PhotoDao) {
 

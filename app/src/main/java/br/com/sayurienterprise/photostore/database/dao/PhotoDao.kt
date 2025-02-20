@@ -7,7 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import br.com.sayurienterprise.photostore.model.Photo
+import br.com.sayurienterprise.photostore.database.model.Photo
 
 @Dao
 interface PhotoDao {
