@@ -3,16 +3,10 @@ package br.com.sayurienterprise.photostore
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainer
-import androidx.recyclerview.widget.RecyclerView
+import br.com.sayurienterprise.photostore.view.MainFragment
 
 class MainActivity : AppCompatActivity() {
 

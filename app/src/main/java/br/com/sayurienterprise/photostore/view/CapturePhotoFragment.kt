@@ -1,4 +1,4 @@
-package br.com.sayurienterprise.photostore
+package br.com.sayurienterprise.photostore.view
 
 import android.Manifest
 import android.content.Context
@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import br.com.sayurienterprise.photostore.R
 import java.io.File
 import java.io.FileOutputStream
 

@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-kapt")
 }
 
 android {
@@ -11,8 +14,8 @@ android {
         applicationId = "br.com.sayurienterprise.photostore"
         minSdk = 25
         targetSdk = 34
-        versionCode = 2
-        versionName = "2.0"
+        versionCode = 3
+        versionName = "3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -33,10 +36,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.21")
+    implementation("androidx.room:room-runtime:2.4.0") // Room runtime
+    implementation("androidx.room:room-ktx:2.4.0")  // Room KTX for coroutine support
+    kapt("androidx.room:room-compiler:2.6.1")
 
+    implementation("androidx.fragment:fragment-ktx:1.8.6")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

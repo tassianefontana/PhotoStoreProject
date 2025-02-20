@@ -1,4 +1,4 @@
-package br.com.sayurienterprise.photostore
+package br.com.sayurienterprise.photostore.view
 
 import android.os.Bundle
 import android.os.Environment
@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.sayurienterprise.photostore.ImageAdapter
+import br.com.sayurienterprise.photostore.R
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
