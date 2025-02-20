@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="capturePhotoButton" type="id" />
+    <item name="recyclerViewPictures" type="id" />
+    <item name="tvImagesLabel" type="id" />
+    <item name="tvDate" type="id" />
+    <item name="spnAge" type="id" />
+    <item name="etName" type="id" />
+    <item name="logo" type="id" />
+</resources>

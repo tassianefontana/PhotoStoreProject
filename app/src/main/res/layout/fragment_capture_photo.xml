@@ -1,20 +1,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:id="@+id/camera"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextureView
-        android:id="@+id/textureView"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:padding="16dp">
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="500dp"/>
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        android:layout_marginTop="72dp"
+        app:cardElevation="8dp">
 
-    <Button
+        <TextureView
+            android:id="@+id/textureView"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCamera"
-        android:text="@string/take_picture"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+        android:text="@string/take_picture"
+        app:cornerRadius="50dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:icon="@drawable/ic_camera"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@color/colorSecondary"
+        app:iconGravity="textStart"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="30dp"/>
 </LinearLayout>

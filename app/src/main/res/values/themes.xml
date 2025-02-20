@@ -1,9 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.PhotoStore" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+    <style name="Theme.PhotoStore" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#0A192F</item>
+        <item name="colorPrimaryVariant">@color/colorSecondary</item>
+        <item name="colorSecondary">#D4DDE8</item>
+        <item name="colorAccent">#C0C4DC</item>
 
-    <style name="Theme.PhotoStore" parent="Base.Theme.PhotoStore" />
+        <item name="android:colorBackground">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryVariant</item>
+
+        <item name="android:statusBarColor">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/colorSecondary</item>
+
+       <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox</item>
+    </style>
 </resources>

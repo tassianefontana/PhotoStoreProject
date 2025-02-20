@@ -3,8 +3,8 @@ package br.com.sayurienterprise.photostore.database
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
-import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import br.com.sayurienterprise.photostore.constants.DBConfig
 import br.com.sayurienterprise.photostore.database.dao.PhotoDao
 import br.com.sayurienterprise.photostore.model.Photo
@@ -22,8 +22,11 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "photo_database"
-                ).build()
+                    DBConfig.DB_NAME
+                ).fallbackToDestructiveMigration()
+                    .addCallback(object : Callback() {
+                    })
+                    .build()
                 INSTANCE = instance
                 instance
             }

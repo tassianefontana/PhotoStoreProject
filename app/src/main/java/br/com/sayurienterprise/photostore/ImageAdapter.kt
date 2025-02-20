@@ -1,41 +1,40 @@
-package br.com.sayurienterprise.photostore
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import br.com.sayurienterprise.photostore.R
+import java.io.File
 
-class ImageAdapter(private val files: List<String>) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+class ImageAdapter(
+    private var files: List<String>,
+    private val onItemClickListener: (String) -> Unit
+) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textView.text = files[position]
+        val filePath = files[position]
+        val file = File(filePath)
+        holder.fileNameTextView.text = file.name
+        holder.itemView.setOnClickListener {
+            onItemClickListener(filePath)
+        }
     }
 
     override fun getItemCount(): Int = files.size
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView: TextView = itemView.findViewById(android.R.id.text1)
+    fun updateList(newList: List<String>) {
+        files = newList
+        notifyDataSetChanged()
     }
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val fileNameTextView: TextView =
+            itemView.findViewById(R.id.fileNameTextView)
+    }
+
 }
-//
-//    inner class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-//        val imageName: TextView = view.findViewById(android.R.id.text1)
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-//        val view = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false)
-//        return ImageViewHolder(view)
-//    }
-//
-//    override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-//        holder.imageName.text = imageList[position]
-//    }
-//
-//    override fun getItemCount(): Int = imageList.size
-//}

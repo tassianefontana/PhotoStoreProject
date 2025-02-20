@@ -1,71 +1,131 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="center_horizontal"
+    android:padding="20dp"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/capturePhotoButton"
+        android:layout_width="229dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="28dp"
+        android:contentDescription="@string/app_logo"
+        android:src="@drawable/ic_logo_foreground" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/take_photo"
+
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/name"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:padding="2dp"
+        android:fontFamily="@font/custom_font"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="16dp"/>
 
-    <EditText
-        android:id="@+id/etName"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/type_your_name"
-        android:inputType="text" />
+        app:boxBackgroundMode="outline"
+        app:boxBackgroundColor="@color/colorAccent"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp">
 
-    <TextView
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/age"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:padding="2dp"
+        android:fontFamily="@font/custom_font"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="16dp"/>
 
-    <Spinner
-        android:id="@+id/spnAge"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number" />
+        app:endIconMode="dropdown_menu"
+        app:boxBackgroundMode="outline"
+        android:focusable="false"
+        app:boxBackgroundColor="@color/colorAccent"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        android:textAlignment="textStart"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp">
 
-    <TextView
+        <AutoCompleteTextView
+            android:id="@+id/spnAge"
+            android:layout_width="match_parent"
+            android:focusable="false"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+   <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/current_date"
         android:textSize="16sp"
-        android:paddingTop="16dp" />
+        android:padding="2dp"
+        android:layout_marginTop="14dp"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="@font/custom_font"
+        android:textColor="@color/colorAccent"/>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvImagesLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/download_images"
+        android:textColor="@color/colorAccent"
         android:textSize="18sp"
-        android:layout_marginTop="16dp" />
+        android:padding="2dp"
+        android:fontFamily="@font/custom_font"
+        android:layout_gravity="start"
+        android:layout_marginTop="16dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewPictures"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        app:cardCornerRadius="12dp"
+        android:layout_marginBottom="28dp"
+        app:cardElevation="6dp">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/capturePhotoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/capture_photo"
-        android:src="@android:drawable/ic_menu_camera"
-        android:background="?attr/selectableItemBackgroundBorderless" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPictures"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:padding="8dp"/>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

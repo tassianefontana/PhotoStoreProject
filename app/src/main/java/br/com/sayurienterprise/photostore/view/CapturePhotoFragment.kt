@@ -3,7 +3,6 @@ package br.com.sayurienterprise.photostore.view
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.ImageFormat
 import android.graphics.SurfaceTexture
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraDevice
@@ -21,29 +20,28 @@ import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import br.com.sayurienterprise.photostore.PhotoStoreApplication
 import br.com.sayurienterprise.photostore.R
 import java.io.File
 import java.io.FileOutputStream
 
 
 class CapturePhotoFragment : Fragment() {
+    private val TAG: String = CapturePhotoFragment::class.java.simpleName
     lateinit var cameraManager: CameraManager
     lateinit var textureView: TextureView
     lateinit var mCameraCaptureSession: CameraCaptureSession
     lateinit var mCameraDevice: CameraDevice
     lateinit var handler: Handler
     lateinit var mCaptureRequest: CaptureRequest.Builder
-    lateinit var handlerThread: HandlerThread
+    private lateinit var handlerThread: HandlerThread
     lateinit var imageReader: ImageReader
 
-    companion object {
-        @JvmStatic
-        fun newInstance() : CapturePhotoFragment {
-            return CapturePhotoFragment()
-        }
-    }
+    companion object;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,28 +55,35 @@ class CapturePhotoFragment : Fragment() {
         handlerThread.start()
         handler = Handler(handlerThread.looper)
 
-        imageReader = ImageReader.newInstance(1920, 1080, ImageFormat.JPEG, 2) // Higher resolution
-
+        imageReader =
+            (requireActivity().application as PhotoStoreApplication).cameraHelper.setupImageReader()
         imageReader.setOnImageAvailableListener({ imageReader ->
             val image = imageReader.acquireLatestImage()
-
+            var message = ""
             if (image != null) {
                 try {
                     val buffer = image.planes[0].buffer
                     val bytes = ByteArray(buffer.remaining())
                     buffer.get(bytes)
 
-                    val downloadsFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                    val fileName = "photo_${System.currentTimeMillis()}.jpeg"
+                    val downloadsFolder =
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    val fileName = "photo_${System.currentTimeMillis()}.jpg"
+                    val resultBundle = bundleOf("photoFileName" to fileName)
+                    parentFragmentManager.setFragmentResult("requestKey", resultBundle)
                     val file = File(downloadsFolder, fileName)
 
                     val opStream = FileOutputStream(file)
                     opStream.write(bytes)
                     opStream.close()
+                    message = getString(R.string.photo_saved_in_downloads)
+                    parentFragmentManager.popBackStack()
                 } catch (e: Exception) {
-                    Log.e("Camera", "Error saving image: ${e.message}")
+                    Log.e(TAG, "Error saving image: ${e.message}")
+                    message = getString(R.string.error_saving_photo)
                 } finally {
                     image.close()
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
                 }
             }
         }, handler)
@@ -87,22 +92,23 @@ class CapturePhotoFragment : Fragment() {
             override fun onSurfaceTextureAvailable(p0: SurfaceTexture, p1: Int, p2: Int) {
                 openCamera()
             }
+
             override fun onSurfaceTextureSizeChanged(p0: SurfaceTexture, p1: Int, p2: Int) {}
             override fun onSurfaceTextureDestroyed(p0: SurfaceTexture): Boolean {
                 return false
             }
+
             override fun onSurfaceTextureUpdated(p0: SurfaceTexture) {}
         }
 
-
         rootView.findViewById<Button>(R.id.btnCamera).apply {
             setOnClickListener {
-                mCaptureRequest = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)
+                mCaptureRequest =
+                    mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)
                 mCaptureRequest.addTarget(imageReader.surface)
                 mCameraCaptureSession.capture(mCaptureRequest.build(), null, handler)
             }
         }
-
         return rootView
     }
 
@@ -111,7 +117,8 @@ class CapturePhotoFragment : Fragment() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED) {
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             return
         }
         cameraManager.openCamera(cameraId, object : CameraDevice.StateCallback() {
@@ -131,12 +138,12 @@ class CapturePhotoFragment : Fragment() {
                                     mCaptureRequest.build(), null, handler
                                 )
                             } catch (e: Exception) {
-                                Log.e("Camera", "Error configuring repeating capture: ${e.message}")
+                                Log.e(TAG, "Error configuring repeating capture: ${e.message}")
                             }
                         }
 
                         override fun onConfigureFailed(session: CameraCaptureSession) {
-                            Log.e("Camera", "Failed to configure capture session")
+                            Log.e(TAG, "Failed to configure capture session")
                         }
                     },
                     handler
@@ -151,7 +158,7 @@ class CapturePhotoFragment : Fragment() {
             override fun onError(cameraDevice: CameraDevice, error: Int) {
                 cameraDevice.close()
                 mCameraDevice = cameraDevice
-                Log.e("Camera", "Error opening camera: $error")
+                Log.e(TAG, "Error opening camera: $error")
             }
         }, handler)
     }
