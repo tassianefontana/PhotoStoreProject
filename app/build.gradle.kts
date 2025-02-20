@@ -15,7 +15,7 @@ android {
         minSdk = 25
         targetSdk = 34
         versionCode = 3
-        versionName = "3.0"
+        versionName = "3.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,6 +44,8 @@ dependencies {
     implementation("androidx.room:room-runtime:2.4.0") // Room runtime
     implementation("androidx.room:room-ktx:2.4.0")  // Room KTX for coroutine support
     kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.0")
 
     implementation("androidx.fragment:fragment-ktx:1.8.6")
     implementation(libs.androidx.core.ktx)

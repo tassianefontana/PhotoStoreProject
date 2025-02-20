@@ -12,9 +12,15 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.sayurienterprise.photostore.ImageAdapter
+import br.com.sayurienterprise.photostore.PhotoStoreApplication
+import br.com.sayurienterprise.photostore.PhotoViewModel
+import br.com.sayurienterprise.photostore.PhotoViewModelFactory
 import br.com.sayurienterprise.photostore.R
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -28,11 +34,16 @@ class MainFragment : Fragment() {
     lateinit var imageFilesList: List<String>
     lateinit var capturePhotoButton: ImageButton
 
+
     companion object {
         @JvmStatic
         fun newInstance(): MainFragment {
             return MainFragment()
         }
+    }
+
+    private val viewModel: PhotoViewModel by viewModels {
+        PhotoViewModelFactory((requireActivity().application as PhotoStoreApplication).database.photoDao())
     }
 
     override fun onCreateView(
@@ -42,12 +53,25 @@ class MainFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_main, container, false)
 
         initializeViews(rootView)
+        configureViewModel()
         loadImagesFromDownloads()
         capturePhotoButton.setOnClickListener {
             capturePhotoFragment()
         }
 
         return rootView
+    }
+
+    private fun configureViewModel(){
+        viewModel.name.observe(viewLifecycleOwner) { name ->
+            edtName.setText(name)
+        }
+        viewModel.age.observe(viewLifecycleOwner) { age ->
+            spnAge.setSelection(age ?: 0)
+        }
+        viewModel.date.observe(viewLifecycleOwner) { date ->
+            tvDate.text = date
+        }
     }
 
     private fun initializeViews(rootView: View) {

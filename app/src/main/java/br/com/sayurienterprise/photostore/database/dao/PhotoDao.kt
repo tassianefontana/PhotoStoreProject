@@ -1,5 +1,6 @@
 package br.com.sayurienterprise.photostore.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -8,17 +9,19 @@ import androidx.room.Update
 import br.com.sayurienterprise.photostore.model.Photo
 
 @Dao
-public interface PhotoDao {
+interface PhotoDao {
+
 
     @Insert
-    fun SavePhoto(photo: Photo?)
+    fun insert(photoData: Photo)
 
     @Query("SELECT * FROM photo_table")
-    fun getPhoto(): List<Photo?>?
+    fun getPhotos(): LiveData<List<Photo>>
 
     @Delete
-    fun removePhoto(photo: Photo?)
+    fun removePhoto(photo: Photo)
 
     @Update
-    fun editPhoto(photo : Photo?)
+    fun editPhoto(photo: Photo)
 }
+
