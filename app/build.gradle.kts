@@ -12,15 +12,25 @@ android {
         applicationId = "br.com.sayurienterprise.photostore"
         minSdk = 25
         targetSdk = 34
-        versionCode = 4
-        versionName = "3.2"
+        versionCode = 5
+        versionName = "3.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        create("key1") {
+            storeFile = file("\\keystore\\releasekey.jks")
+            storePassword = "android!@#"
+            keyAlias = "volvo-release"
+            keyPassword = "android!@#"
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("key1")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -35,10 +45,20 @@ android {
         jvmTarget = "1.8"
     }
 
+    applicationVariants.all {
+        outputs.all {
+            val buildType = buildType.name
+            val versionName = versionName
+
+            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
+                "PhotoStore_v${versionName}_${buildType}.apk"
+        }
+    }
+
 }
 
 dependencies {
-    implementation ("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.cardview:cardview:1.0.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.21")
     implementation("androidx.room:room-runtime:2.4.0") // Room runtime
     implementation("androidx.room:room-ktx:2.4.0")  // Room KTX for coroutine support

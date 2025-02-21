@@ -30,6 +30,7 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.absoluteValue
 
 class MainFragment : Fragment() {
     private val TAG: String = MainFragment::class.java.simpleName
@@ -40,6 +41,7 @@ class MainFragment : Fragment() {
     lateinit var recyclerViewImages: RecyclerView
     lateinit var capturePhotoButton: ImageView
     lateinit var imageAdapter: ImageAdapter
+    private var selectedItem = 0
 
     companion object
 
@@ -65,6 +67,7 @@ class MainFragment : Fragment() {
         capturePhotoButton.setOnClickListener {
             capturePhotoFragment()
         }
+
         parentFragmentManager.setFragmentResultListener(
             "requestKey",
             viewLifecycleOwner
@@ -73,10 +76,10 @@ class MainFragment : Fragment() {
             if (photoFileName != null) {
                 this.photoFileName = photoFileName
                 Log.d(TAG, "onCreateView: this.PhotoFileName: $photoFileName")
-                val photo = viewModel.age.value?.let {
+                val photo = viewModel.photoFileName?.let {
                     Photo(
                         name = edtName.text.toString(),
-                        age = it,
+                        age = selectedItem,
                         date = viewModel.date.toString(),
                         photoFileName = photoFileName
                     )
@@ -201,6 +204,10 @@ class MainFragment : Fragment() {
             ageList
         )
         spnAge.setAdapter(ageAdapter)
+
+        spnAge.setOnItemClickListener { parent, _, position, _ ->
+            selectedItem = parent.getItemAtPosition(position).toString().toInt()
+        }
     }
 
     private fun capturePhotoFragment() {
